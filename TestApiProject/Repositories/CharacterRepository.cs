@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
 using TestApiProject.Data;
@@ -21,14 +22,24 @@ namespace TestApiProject.Repositories
         #endregion
 
         #region GetCharacters
-        public IQueryable<Character> GetCharacters()
+        public IQueryable<Characters> GetCharacters()
         {
             return _database.Characters.AsQueryable();
         }
         #endregion
 
+        #region GetCharactersWithRelatedData
+        public List<Characters> GetCharactersWithRelatedData()
+        {
+            return _database.Characters
+                .Include(c => c.Users)
+                .Include(c => c.CharactersSuperpowers)
+                .ToList();
+        }
+        #endregion
+
         #region CreateCharacter
-        public Character CreateCharacter(Character character)
+        public Characters CreateCharacter(Characters character)
         {
             _database.Characters.Add(character);
             return character;
@@ -43,13 +54,32 @@ namespace TestApiProject.Repositories
             {
                 return false;
             }
+            var users = _database.Users.Where(u => u.CharacterId == characterId).ToList();
+            foreach(var user in users)
+            {
+                user.CharacterId = null;
+            }
             _database.Characters.Remove(character);
             return true;
         }
         #endregion
 
+        #region DeleteCharactersSuperPowers
+        public bool DeleteCharactersSuperPowers(int characterId)
+        {
+            var charactersSuperPowers = _database.CharactersSuperpowersJoin
+                                                 .Where(cs => cs.CharacterId == characterId);
+            if (charactersSuperPowers == null)
+            {
+                return false;
+            }
+            _database.CharactersSuperpowersJoin.RemoveRange(charactersSuperPowers);
+            return true;
+        }
+        #endregion
+
         #region UpdateCharacter
-        public bool UpdateCharacter(Character updatedCharacter)
+        public bool UpdateCharacter(Characters updatedCharacter)
         {
             var existingCharacter = _database.Characters.FirstOrDefault(f => f.Id == updatedCharacter.Id);
             if (existingCharacter == null)

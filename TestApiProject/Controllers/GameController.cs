@@ -136,7 +136,51 @@ namespace TestApiProject.Controllers
         #endregion
 
         #region CharacterServices
+        [HttpGet("Characters")]
+        public ActionResult GetCharacters()
+        {
+            var result = _characterService.GetCharacters();
+            if (result == null)
+            {
+                NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("Characters")]
+        public ActionResult<CharacterGetDto> PostCharacter(CharacterPostDto input)
+        {
+            var result = _characterService.CreateCharacter(input);
+            if(result == null)
+            {
+                NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpPut("Characters")]
+        public ActionResult<bool> PutCharacters(CharacterPutDto input)
+        {
+            var result = _characterService.UpdateCharacter(input);
+            if (result == null)
+            {
+                NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpDelete("Characters")]
+        public ActionResult<bool> DeleteCharacter(int characterId)
+        {
+            var result = _characterService.DeleteCharacter(characterId);
+            if (result == null)
+            {
+                NotFound();
+            }
+            return Ok(result);
+        }
 
         #endregion
+        
     }
 }

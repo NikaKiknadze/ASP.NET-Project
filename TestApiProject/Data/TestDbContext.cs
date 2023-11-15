@@ -15,8 +15,8 @@ namespace TestApiProject.Data
         }
         public DbSet<User> Users { get; set; }
         public DbSet<SuperPowers> SuperPowers { get; set; }
-        public DbSet<Character> Characters { get; set; }
-        public DbSet<CharactersSuperpowersJoin> CharactersSuperpowers { get; set; }
+        public DbSet<Characters> Characters { get; set; }
+        public DbSet<CharactersSuperpowersJoin> CharactersSuperpowersJoin { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CharactersSuperpowersJoin>()

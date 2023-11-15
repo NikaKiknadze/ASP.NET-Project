@@ -5,7 +5,7 @@
 namespace TestApiProject.Migrations
 {
     /// <inheritdoc />
-    public partial class TestMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,18 +37,11 @@ namespace TestApiProject.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PowerName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    HealthGain = table.Column<int>(type: "int", nullable: false),
-                    CharacterId = table.Column<int>(type: "int", nullable: true)
+                    HealthGain = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SuperPowers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SuperPowers_Characters_CharacterId",
-                        column: x => x.CharacterId,
-                        principalSchema: "game",
-                        principalTable: "Characters",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -105,12 +98,6 @@ namespace TestApiProject.Migrations
                 name: "IX_CharactersSuperpowersJoin_CharacterId",
                 schema: "game",
                 table: "CharactersSuperpowersJoin",
-                column: "CharacterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SuperPowers_CharacterId",
-                schema: "game",
-                table: "SuperPowers",
                 column: "CharacterId");
 
             migrationBuilder.CreateIndex(

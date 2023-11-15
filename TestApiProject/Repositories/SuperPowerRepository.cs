@@ -22,7 +22,7 @@ namespace TestApiProject.Repositories
             {
                 throw;
             }
-            
+
         }
         #endregion
 
@@ -37,11 +37,25 @@ namespace TestApiProject.Repositories
         public bool DeleteSuperPower(int superPowerId)
         {
             var superPower = _database.SuperPowers.FirstOrDefault(s => s.Id == superPowerId);
-            if(superPower == null)
+            if (superPower == null)
             {
                 return false;
             }
             _database.SuperPowers.Remove(superPower);
+            return true;
+        }
+        #endregion
+
+        #region DeleteCharactersSuperPowers
+        public bool DeleteCharactersSuperPowers(int superPowerId)
+        {
+            var charactersSuperPowers = _database.CharactersSuperpowersJoin
+                                                 .Where(cs => cs.SuperPowerId == superPowerId);
+            if (charactersSuperPowers == null)
+            {
+                return false;
+            }
+            _database.CharactersSuperpowersJoin.RemoveRange(charactersSuperPowers);
             return true;
         }
         #endregion
@@ -67,7 +81,7 @@ namespace TestApiProject.Repositories
             existingSuperPower.HealthGain = updatedSuperPower.HealthGain;
             existingSuperPower.PowerName = updatedSuperPower.PowerName;
             existingSuperPower.CharactersSuperpowers = updatedSuperPower.CharactersSuperpowers;
-            
+
             return true;
         }
         #endregion

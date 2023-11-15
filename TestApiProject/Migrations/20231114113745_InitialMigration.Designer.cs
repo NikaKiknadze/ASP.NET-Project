@@ -12,8 +12,8 @@ using TestApiProject.Data;
 namespace TestApiProject.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    [Migration("20231113145348_TestMigration")]
-    partial class TestMigration
+    [Migration("20231114113745_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,9 +74,6 @@ namespace TestApiProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CharacterId")
-                        .HasColumnType("int");
-
                     b.Property<int>("HealthGain")
                         .HasColumnType("int");
 
@@ -86,8 +83,6 @@ namespace TestApiProject.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CharacterId");
 
                     b.ToTable("SuperPowers", "game");
                 });
@@ -142,13 +137,6 @@ namespace TestApiProject.Migrations
                     b.Navigation("SuperPower");
                 });
 
-            modelBuilder.Entity("TestApiProject.Entities.SuperPowers", b =>
-                {
-                    b.HasOne("TestApiProject.Entities.Character", null)
-                        .WithMany("SuperPower")
-                        .HasForeignKey("CharacterId");
-                });
-
             modelBuilder.Entity("TestApiProject.Entities.User", b =>
                 {
                     b.HasOne("TestApiProject.Entities.Character", "Character")
@@ -161,8 +149,6 @@ namespace TestApiProject.Migrations
             modelBuilder.Entity("TestApiProject.Entities.Character", b =>
                 {
                     b.Navigation("CharactersSuperpowers");
-
-                    b.Navigation("SuperPower");
                 });
 
             modelBuilder.Entity("TestApiProject.Entities.SuperPowers", b =>
