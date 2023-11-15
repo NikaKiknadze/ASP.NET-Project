@@ -7,7 +7,7 @@ namespace TestApiProject.Entities
     {
         public int CharacterId { get; set; }
         public int SuperPowerId { get; set; }
-        public virtual Character Character { get; set; }
+        public virtual Characters Character { get; set; }
         public virtual SuperPowers SuperPower { get; set; }
     }
 }

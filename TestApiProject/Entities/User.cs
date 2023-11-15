@@ -17,6 +17,6 @@ namespace TestApiProject.Entities
         [ForeignKey("Character")]
         public int? CharacterId { get; set; }
 
-        public virtual Character? Character { get; set; }
+        public virtual Characters? Character { get; set; }
     }
 }

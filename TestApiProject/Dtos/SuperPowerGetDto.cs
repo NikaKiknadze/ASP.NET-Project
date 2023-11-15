@@ -9,5 +9,7 @@ namespace TestApiProject.Dtos
         public string? PowerName { get; set; }
 
         public int? HealthGain { get; set; }
+
+        public List<int>? CharacterIds { get; set; }
     }
 }

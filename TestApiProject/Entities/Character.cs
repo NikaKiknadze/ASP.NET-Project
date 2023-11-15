@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace TestApiProject.Entities
 {
     [Table("Characters", Schema = "game")]
-    public class Character
+    public class Characters
     {
         [Key]
         public int Id { get; set; }
@@ -16,7 +16,8 @@ namespace TestApiProject.Entities
         [MaxLength(10)]
         public string CharacterType { get; set; }
         
-        public virtual ICollection<SuperPowers> SuperPower { get; set; }
+
+        public virtual ICollection<User> Users { get; set; }
         public virtual ICollection<CharactersSuperpowersJoin> CharactersSuperpowers { get; set;}
 
     }
